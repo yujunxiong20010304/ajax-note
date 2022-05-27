@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax请求超时与网络异常</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            border: 1px solid darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <button>点我</button>
+    <div>
+
+    </div>
+    <script>
+        let btn = document.querySelector('button');
+        let div = document.querySelector('div');
+        btn.addEventListener('click', function(){
+            // 创建对象
+            let xhr = new XMLHttpRequest();
+
+            // 超时设置 2s 设置 当2s后端数据没有加载过来就会停止加载，并调用超时函数
+            xhr.timeout = 2000;
+            // 超时回调
+            xhr.ontimeout = function(){
+                alert('网络异常稍后重试')
+            }
+            /*xhr.addEventListener('timeout',function(){
+                alert('网络异常稍后重试')
+            })*/
+            // 网络异常回调
+            xhr.onerror = function(){
+               alert("你的网络异常");
+            }
+            /*xhr.addEventListener('error',function(){
+                 alert("你的网络异常");
+            })*/
+            // 出始化 设置类型与URL
+            xhr.open('GET', 'http://127.0.0.1:5000?');
+            // 发送
+            xhr.send();
+            // 事件处理
+            xhr.addEventListener('readystatechange', function(){
+                if (xhr.readyState===4){
+                    if (xhr.status>=200&&xhr.status<300){
+                        div.innerHTML = xhr.response;
+                    }
+                }
+
+            })
+        })
+
+    </script>
+</body>
+</html>

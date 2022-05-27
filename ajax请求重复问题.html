@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax重复请求问题</title>
+</head>
+<body>
+    <button>发送</button>
+    <script>
+        let btn = document.querySelector('button');
+        let isSending = false; // 是否正在发送ajax请求
+        let xhr = null;
+        btn.addEventListener('click',function(){
+            // 判断标示变量
+            if(isSending) xhr.abort();
+
+            xhr = new XMLHttpRequest();
+            // 修改 标示变量的值
+            isSending = true;
+            xhr.open('GET', 'http://127.0.0.1:5000/');
+            xhr.send();
+            xhr.addEventListener('readystatechange',function(){
+                if (xhr.readyState===4){
+                    // 修改标示变量
+                    isSending = false;
+                }
+            })
+        })
+    </script>
+</body>
+</html>

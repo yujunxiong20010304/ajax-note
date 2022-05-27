@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax设置请求头信息</title>
+    <style>
+        #result{
+            width: 100px;
+            height: 100px;
+            border: 1px solid skyblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">
+
+    </div>
+    <script>
+        let div = document.getElementById('result');
+        div.addEventListener('mouseover', function(){
+            // 1 创建对象
+            let xhr = new XMLHttpRequest();
+
+            // 2 出始化 设置类型与URL
+            xhr.open('POST','http://127.0.0.1:5000')
+
+            // 设置请求头信息
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // Content-Type 设置请求体内容的类型
+            // application/x-www-form-urlencoded 是a=100&w=200&u=300参数查询字符串的类型，固定写法
+
+            // 3 发送
+            // xhr.send();
+            xhr.send('a=100&w=200&u=300'); // 发送POST请求携带参数 &分割参数
+            // 参数可以非常灵活，但是要保证服务端能够解析
+
+            // 4 事件绑定
+            xhr.addEventListener('readystatechange',function(){
+                // 判断
+                if(xhr.readyState===4){
+                    if (xhr.status>=200&&xhr.status<300){
+                        div.innerHTML = xhr.response;
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

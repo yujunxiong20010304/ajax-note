@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            border: 1px solid darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <button>点我</button>
+    <div>
+
+    </div>
+    <script>
+        let btn = document.querySelector('button');
+        let div = document.querySelector('div');
+        // 创建对象
+        let xhr = new XMLHttpRequest();
+        // 出始化 设置类型与URL （在此处处理IE缓存问题）
+        xhr.open('GET', 'http://127.0.0.1:5000?t='+Date.now());
+        // 发送
+        xhr.send();
+        // 事件处理
+        xhr.addEventListener('readystatechange', function(){
+            if (xhr.readyState===4){
+                if (xhr.status>=200&&xhr.status<300){
+                    div.innerHTML = xhr.response;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

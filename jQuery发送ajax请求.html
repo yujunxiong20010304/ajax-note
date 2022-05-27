@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../jquery/jquery.min.js"></script>
+</head>
+<body>
+    <button>jQuery_get</button>
+    <button>jQuery_post</button>
+    <button>通用型ajax</button>
+    <script>
+        $(function(){
+            $('button').on('click',function(){
+                if($(this).index()===0){  // jQuery发送get型的ajax请求
+                    // 第二个参数 {a:100,b:200,c:300} 参数类型是一个对象
+                    // 第三个参数 是一个回调函数，回调函数的参数data 是一个响应体
+                    // 第四个参数是响应体的类型, 不加默认就是字符拆
+                    $.get('http://127.0.0.1:5000/',{a:100,b:200,c:300},function(data){
+                        console.log(data);
+                    },'json');
+                }
+                if($(this).index()===1){  // jQuery发送post型的ajax请求
+                    $.post('http://127.0.0.1:5000/',{a:100,b:200,c:300},function(data){
+                        console.log(data);
+                    });
+                }
+
+                if($(this).index()===2){  // // jQuery发送通用型的ajax请求
+                    $.ajax({
+                        // url 给谁发
+                        url: 'http://127.0.0.1:5000/',
+                        // 参数,是一个对象
+                        data: {a:100,b:200},
+                        // 请求的类型 GEt/POST
+                        type: 'GET',
+                        // 响应体结果设置 (如果后端发送的是json格式的数据，在这里设置相应的json结果设置，那么可以得到原本的数据类型)
+                        // 如果数据类型不匹配回进入失败回调函数
+                        dataType: 'json',
+                        // 成功的回调   data是响应体结果
+                        success: function(data){
+                            console.log(data);
+                        },
+                        // 超时时间,毫秒为单位
+                        timeout: 2000,
+                        // 失败的回调(超时网络异常)
+                        error: function(){
+                            console.log('出错了');
+                        },
+                        // 头信息(需要在后端进行某些配置)
+                        headers: {
+                            c: 300,
+                            d: 400
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+
+        });
+    </script>
+</body>
+</html>

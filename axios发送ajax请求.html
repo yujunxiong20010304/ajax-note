@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios发送ajax请求</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <button>GET</button>
+    <button>POST</button>
+    <button>AJAX</button>
+    <script>
+        let btn = document.querySelectorAll('button')
+        // GET请求
+        btn[0].addEventListener('click', function(){
+            axios.get('http://127.0.0.1:5000/',{
+                // url参数
+                params: {
+                    id: 100,
+                    vip: 7
+                },
+                // 请求头信息
+                headers: {
+                    name: 'flack',
+                    age: 20
+                }
+            });
+        })
+    </script>
+</body>
+</html>

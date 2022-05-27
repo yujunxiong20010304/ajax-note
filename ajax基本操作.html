@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajax请求</title>
+    <style>
+        #results{
+            width: 110px;
+            height: 110px;
+            border: 1px solid darkcyan;
+        }
+    </style>
+</head>
+<body>
+    <button>
+        点我
+    </button>
+    <div id = "results">
+
+    </div>
+    <script>
+        // 获取元素
+        let btn = document.querySelector('button')
+        let div= document.querySelector('div');
+        // 绑定事件
+        btn.addEventListener('click',function(){
+            // 1.创建对象
+            let xhr = new XMLHttpRequest();
+            // 2.初始化 设置请求方法和url
+            xhr.open('GET','http://127.0.0.1:5000?a=100&d=200');
+            // 3.发送
+            xhr.send();
+            // 4.事件绑定 处理服务端返回的结果
+                // readystate 是xhr对象中的属性，表示状态0，1，2，3，4
+                    // 0 表示 创建对象
+                    // 1 表示 初始化完毕
+                    // 2 表示 发送
+                    // 3 表示 服务端返回部分结果
+                    // 4 表示 服务端返回所有结果
+                // change 改变的
+            xhr.addEventListener('readystatechange',function(){
+                // 判断 （服务端返回了所有结果）
+                if (xhr.readyState===4){
+                    // 判断响应状态码
+                        // 响应状态码以2开头的都代表成功
+                    if(xhr.status>=200&&xhr.status<=200){
+                        // 处理结果 行 头 空行 体
+                        // 1 响应行
+                        console.log(xhr.status);  // 状态码
+                        console.log(xhr.responseText);  // 状态字符串
+                        console.log(xhr.getAllResponseHeaders());   // 所有响应头
+                        console.log(xhr.response);  // 响应体
+                        div.innerHTML = xhr.response;
+                    }else{
+
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>

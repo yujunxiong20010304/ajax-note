@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 200px;
+            border: 1px solid chartreuse;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">
+
+    </div>
+    <script>
+        let div = document.getElementById('result')
+        window.addEventListener('keydown',function(){
+            // 发送请求
+            let xhr = new XMLHttpRequest();
+
+            // （自动转化数据）设置响应体数据的类型
+            xhr.responseType = 'json';
+
+            // 初始化
+            xhr.open('GET','http://127.0.0.1:5000/');
+            // 发送
+            xhr.send();
+            // 事件绑定
+            xhr.addEventListener('readystatechange',function(){
+                if (xhr.readyState===4){
+                    if(xhr.status>=200&&xhr.status<300){
+                        console.log(xhr.response);
+
+                        // 如果后端返回的是一个json数据
+
+                        // 手动对数据转化
+                        let data = JSON.parse(xhr.response);
+                        console.log(data);
+                        div.innerHTML = data;
+
+
+                    }
+                }
+            })
+        })
+    </script>
+</body>
+</html>
