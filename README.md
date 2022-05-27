@@ -1,2 +1,1 @@
 # ajax-note
-# ajax-note
